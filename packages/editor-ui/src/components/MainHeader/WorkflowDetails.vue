@@ -63,7 +63,7 @@
 			<template>
 				<span class="activator">
 					<span>Active:</span>
-					<WorkflowActivator :workflow-active="isWorkflowActive" :workflow-id="currentWorkflowId" :disabled="!currentWorkflowId"/>
+					<WorkflowActivator :workflow-active="isWorkflowActive" :workflow-id="currentWorkflowId"/>
 				</span>
 				<SaveButton
 					:saved="!this.isDirty && !this.isNewWorkflow"
@@ -172,7 +172,7 @@ export default mixins(workflowHelpers).extend({
 
 			const saved = await this.saveCurrentWorkflow({ tags });
 			this.$telemetry.track('User edited workflow tags', { workflow_id: this.currentWorkflowId as string, new_tag_count: tags.length });
-			
+
 			this.$data.tagsSaving = false;
 			if (saved) {
 				this.$data.isTagsEditEnabled = false;
