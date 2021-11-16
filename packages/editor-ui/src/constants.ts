@@ -26,6 +26,7 @@ export const CREDENTIAL_EDIT_MODAL_KEY = 'editCredential';
 export const CREDENTIAL_SELECT_MODAL_KEY = 'selectCredential';
 export const CREDENTIAL_LIST_MODAL_KEY = 'credentialsList';
 export const PERSONALIZATION_MODAL_KEY = 'personalization';
+export const EXECUTIONS_MODAL_KEY = 'executions';
 
 // breakpoints
 export const BREAKPOINT_SM = 768;

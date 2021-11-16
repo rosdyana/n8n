@@ -1,6 +1,12 @@
 <template>
-	<span>
-		<el-dialog :visible="dialogVisible" append-to-body width="80%" :title="`Workflow Executions ${combinedExecutions.length}/${finishedExecutionsCountEstimated === true ? '~' : ''}${combinedExecutionsCount}`" :before-close="closeDialog">
+	<Modal
+		:name="EXECUTIONS_MODAL_KEY"
+		width="80%"
+		:title="modalTitle"
+		:closeDialog="closeDialog"
+	>
+		<template v-slot:content>
+
 			<div class="filters">
 				<el-row>
 					<el-col :span="2" class="filter-headline">
@@ -98,12 +104,12 @@
 						<el-dropdown trigger="click" @command="handleRetryClick">
 							<span class="retry-button">
 								<n8n-icon-button
-									 v-if="scope.row.stoppedAt !== undefined && !scope.row.finished && scope.row.retryOf === undefined && scope.row.retrySuccessId === undefined && !scope.row.waitTill"
-									 type="light"
-									 :theme="scope.row.stoppedAt === null ? 'warning': 'danger'"
-									 size="mini"
-									 title="Retry execution"
-									 icon="redo"
+									v-if="scope.row.stoppedAt !== undefined && !scope.row.finished && scope.row.retryOf === undefined && scope.row.retrySuccessId === undefined && !scope.row.waitTill"
+									type="light"
+									:theme="scope.row.stoppedAt === null ? 'warning': 'danger'"
+									size="mini"
+									title="Retry execution"
+									icon="redo"
 								/>
 							</span>
 							<el-dropdown-menu slot="dropdown">
@@ -147,9 +153,8 @@
 			<div class="load-more" v-if="finishedExecutionsCount > finishedExecutions.length || finishedExecutionsCountEstimated === true">
 				<n8n-button icon="sync" title="Load More" label="Load More" @click="loadMore()" :loading="isDataLoading" />
 			</div>
-
-		</el-dialog>
-	</span>
+		</template>
+	</Modal>
 </template>
 
 <script lang="ts">
@@ -157,6 +162,7 @@ import Vue from 'vue';
 
 import ExecutionTime from '@/components/ExecutionTime.vue';
 import WorkflowActivator from '@/components/WorkflowActivator.vue';
+import Modal from '@/components/Modal.vue';
 
 import { externalHooks } from '@/components/mixins/externalHooks';
 import { WAIT_TIME_UNLIMITED } from '@/constants';
@@ -187,6 +193,9 @@ import {
 
 import mixins from 'vue-typed-mixins';
 
+import { EXECUTIONS_MODAL_KEY } from '@/constants';
+
+
 export default mixins(
 	externalHooks,
 	genericHelpers,
@@ -200,6 +209,7 @@ export default mixins(
 	components: {
 		ExecutionTime,
 		WorkflowActivator,
+		Modal,
 	},
 	data () {
 		return {
@@ -246,7 +256,7 @@ export default mixins(
 					name: 'Waiting',
 				},
 			],
-
+			EXECUTIONS_MODAL_KEY,
 		};
 	},
 	computed: {
@@ -303,6 +313,9 @@ export default mixins(
 				filter.finished = this.filter.status === 'success';
 			}
 			return filter;
+		},
+		modalTitle (): string {
+			return `Workflow Executions ${this.combinedExecutions.length}/${this.finishedExecutionsCountEstimated === true ? '~' : ''}${this.combinedExecutionsCount}`;
 		},
 	},
 	watch: {
