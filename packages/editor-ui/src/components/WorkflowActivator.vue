@@ -124,12 +124,7 @@ export default mixins(
 			methods: {
 				async activeChanged (newActiveState: boolean) {
 					if (this.workflowId === undefined) {
-						this.$showMessage({
-							title: 'Problem activating workflow',
-							message: 'The workflow did not get saved yet so can not be set active!',
-							type: 'error',
-						});
-						return;
+						await this.saveCurrentWorkflow();
 					}
 
 					if (this.nodesIssuesExist === true) {
