@@ -89,7 +89,7 @@ export default mixins(
 				return {
 					loading: false,
 					alertTriggerContent: '',
-					showActivationAlert: false
+					showActivationAlert: false,
 				};
 			},
 			computed: {
@@ -214,7 +214,7 @@ export default mixins(
 								this.alertTriggerContent = 'Your interval trigger will now run on the schedule you have defined.';
 							}
 						}
-						this.showActivationAlert = true
+						this.showActivationAlert = true;
 					} else {
 						this.$store.commit('setWorkflowInactive', this.workflowId);
 					}
@@ -249,7 +249,7 @@ export default mixins(
 				async showExecutionsList () {
 					this.$store.dispatch('ui/openModal', EXECUTIONS_MODAL_KEY);
 
-				}
+				},
 			},
 		},
 	);
