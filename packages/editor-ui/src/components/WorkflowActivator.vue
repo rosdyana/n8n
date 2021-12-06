@@ -119,12 +119,6 @@ export default mixins(
 						// workflow. If that would not happen then it could be quite confusing
 						// for people because it would activate a different version of the workflow
 						// than the one they can currently see.
-						if (this.dirtyState) {
-							const importConfirm = await this.confirmMessage(`When you activate the workflow all currently unsaved changes of the workflow will be saved.`, 'Activate and save?', 'warning', 'Yes, activate and save!');
-							if (importConfirm === false) {
-								return;
-							}
-						}
 
 						// Get the current workflow data that it gets saved together with the activation
 						data = await this.getWorkflowDataToSave();
